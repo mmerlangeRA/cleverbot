@@ -195,11 +195,11 @@ class TextSummarizer:
         )
         return (lang, summarized_text)
     
-    def summarize_texts(self,texts: List[str]) -> str:
+    def summarize_texts(self,texts: List[str],custom_prompt:str=None) -> str:
         """Summarize a list of texts using OpenAI."""
         logging.info(f"Summarizing {len(texts)} texts")
         prompt = ChatPromptTemplate.from_template(
-            "Summarize the following text concisely:\n\n{text}"
+            custom_prompt if custom_prompt is not None else "Summarize the following text concisely:\n\n{text}"
         )
         chain = prompt | self.llm
         input_data = {"text": texts}
